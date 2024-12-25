@@ -1,0 +1,22 @@
+server:
+  listen: 8080
+  workers: 4
+
+  upstreams:
+    - id: upstream1
+      url: jsonplaceholder.typicode.com
+    
+    - id: upstream2
+      url: localhost:8001
+
+  headers:
+    - key: x-forward-for
+      value: '$ip'
+
+    - key: Authorization
+      value: 'Bearer xyz' 
+
+  rules:
+    - path: /
+      upstreams:
+        - upstream1
